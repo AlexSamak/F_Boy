@@ -43,6 +43,8 @@ class BlogTest(APITestCase):
         for i in range(100):
             BlogFactory()
         url = reverse('blog-list')
+        for i in Blog.objects.all():
+            print(i.cost)
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 100)
