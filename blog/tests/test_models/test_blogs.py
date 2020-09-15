@@ -33,6 +33,7 @@ class BlogTest(APITestCase):
         data = {'slug': blog.slug}
         #url = reverse('blog-get', args=(blog.slug,))
         url = reverse('blog-detail', kwargs={'pk': blog.id})
+        print(url)
         print(f'name={blog.name};\nslug={blog.slug};\nbody={blog.body}\n\n')
         response = self.client.get(url, data=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -42,9 +43,7 @@ class BlogTest(APITestCase):
         for i in range(100):
             BlogFactory()
         url = reverse('blog-list')
-        print(url)
         response = self.client.get(url)
-        print(len(response.data))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 100)
 

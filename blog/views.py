@@ -1,5 +1,4 @@
-from rest_framework import status, viewsets
-
+from rest_framework import viewsets
 from blog.models import Blog
 from blog.serializer import BlogSerializer
 
