@@ -10,7 +10,7 @@ from blog.serializer import BlogSerializer
 class BlogView(APIView):
    def get(self, request, title):
         try:
-            print(title)
+            print(request)
             blog = Blog.objects.get(slug=title)
             serializer = BlogSerializer(blog)
             return Response(serializer.data, status=status.HTTP_200_OK)
