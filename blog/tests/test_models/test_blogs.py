@@ -6,7 +6,7 @@ from rest_framework.test import APITestCase
 from blog.models import Blog
 from blog.tests.factories.blogs import BlogFactory
 
-
+# add SLUG URL variant
 class BlogTest(APITestCase):
     def test_blog_not_found(self):
         data = {'slug': 'random'}
