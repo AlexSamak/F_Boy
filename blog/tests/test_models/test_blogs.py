@@ -10,8 +10,8 @@ from blog.tests.factories.blogs import BlogFactory
 class BlogTest(APITestCase):
     def test_blog_not_found(self):
         data = {'slug': 'random'}
-        #url = reverse('blog-get', args=('random',))
-        url = reverse('blog-detail', kwargs={'pk': 9999})
+        url = reverse('blog-detail', args=(data['slug'],))
+        #url = reverse('blog-detail', kwargs={'pk': 9999})
         print(url)
         response = self.client.get(url, data=data)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
@@ -22,8 +22,11 @@ class BlogTest(APITestCase):
         body = 'test TST test TET1'
         blog = Blog.objects.create(name=name, body=body, slug=slug)
         data = {'slug': blog.slug}
-        #url = reverse('blog-get', args=(blog.slug,))
-        url = reverse('blog-detail', kwargs={'pk': blog.id})
+        # url = reverse('blog-detail', args=(blog.slug,))
+        # print(url)
+        #url = reverse('blog-detail', kwargs={'pk': blog.id})
+        url = reverse('blog-detail', kwargs={'slug': blog.slug})
+        print(url)
         response = self.client.get(url, data=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json().get('slug'), blog.slug)
