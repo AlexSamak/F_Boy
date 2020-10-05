@@ -1,4 +1,4 @@
-#from django.urls import reverse
+# from django.urls import reverse
 from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
@@ -6,12 +6,13 @@ from rest_framework.test import APITestCase
 from blog.models import Blog
 from blog.tests.factories.blogs import BlogFactory
 
+
 # add SLUG URL variant
 class BlogTest(APITestCase):
     def test_blog_not_found(self):
         data = {'slug': 'random'}
         url = reverse('blog-detail', args=(data['slug'],))
-        #url = reverse('blog-detail', kwargs={'pk': 9999})
+        # url = reverse('blog-detail', kwargs={'pk': 9999})
         print(f'TEST=1: {url}')
         response = self.client.get(url, data=data)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
@@ -25,7 +26,7 @@ class BlogTest(APITestCase):
         # url = reverse('blog-detail', args=(blog.slug,))
         # print(url)
         url = reverse('blog-detail', kwargs={'pk': blog.id})
-        #url = reverse('blog-detail', kwargs={'slug': blog.slug})
+        # url = reverse('blog-detail', kwargs={'slug': blog.slug})
         print(f'TEST=2: {url}')
         response = self.client.get(url, data=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -33,12 +34,13 @@ class BlogTest(APITestCase):
 
     def test_blog_factory_found(self):
         blog = BlogFactory()
+        print(f'TEST=3:\nBlog name: {blog.name}\nBlog body:'
+              f' {blog.body}\nBlog slug: {blog.slug} ')
         data = {'slug': blog.slug}
-        print(f'TEST=3: {blog.id}   {blog.slug}')
-        #url = reverse('blog-get', args=(blog.slug,))
+        print(f'TEST=3: blog id={blog.id}')
+        # url = reverse('blog-get', args=(blog.slug,))
         url = reverse('blog-detail', kwargs={'pk': blog.id})
-        print(f'TEST=3: {url}')
-        print(f'name={blog.name};\nslug={blog.slug};\nbody={blog.body}\n\n')
+        print(f'TEST=3: blog URL={url}')
         response = self.client.get(url, data=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json().get('slug'), blog.slug)
@@ -56,7 +58,7 @@ class BlogTest(APITestCase):
 
     def test_blog_Z(self):
         blog = BlogFactory(name='Z')
-        #url = reverse('blog-get', args=(blog.slug,))
+        # url = reverse('blog-get', args=(blog.slug,))
         url = reverse('blog-detail', kwargs={'pk': blog.id})
         print(f'TEST=5: {url}')
         response = self.client.get(url, data={'slug': blog.slug})
